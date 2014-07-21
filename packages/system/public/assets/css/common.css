@@ -1,6 +1,7 @@
 .page-header {
     padding-bottom: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto;
+    max-width: 1024px;
     border-bottom: 0 !important;
 }
 .page-header .navbar-nav {
@@ -23,8 +24,9 @@
     margin-left:0
 }
 .content {
+    margin: 0 auto;
     margin-top:70px;
-    width:100%
+    max-width: 1024px;
 }
 footer {
     position:fixed;

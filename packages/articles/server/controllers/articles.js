@@ -95,3 +95,15 @@ exports.all = function(req, res) {
 
   });
 };
+
+exports.myArticles = function(req, res) {
+  Article.find({ user: req.user }).sort('-created').populate('user', 'name username').exec(function(err, articles) {
+    if (err) {
+      return res.json(500, {
+        error: 'Cannot list the articles'
+      });
+    }
+    res.json(articles);
+
+  });
+};

@@ -1,0 +1,8 @@
+<section data-ng-controller="GoalsController">
+    <h1>Well, heh-ro dare</h1>
+    <form name="goalForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(goalForm.$valid)" novalidate>
+        <div class="form-group" ng-class="{ 'has-error': submitted && goalForm.title.$invalid }">
+
+        </div>
+    </form>
+</section>

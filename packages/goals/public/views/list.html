@@ -1,0 +1,12 @@
+<section data-ng-controller="GoalsController" data-ng-init="find()">
+    <ul class="goals unstyled">
+        <li data-ng-repeat="goal in goals">
+            <span>{{goals.created | date:'medium'}}</span>
+            <span>{{goals.user.name}}</span>
+            <h2>
+                <a data-ng-href="#!/goals/{{goal._id}}">{{article.title}}</a>
+            </h2>
+        </li>
+    </ul>
+    <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
+</section>
