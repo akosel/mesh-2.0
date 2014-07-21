@@ -5,6 +5,7 @@ npm-debug.log
 .bower-*/
 .idea/
 nbproject/
+config/
 node_modules/
 bower_components
 mean.iml
