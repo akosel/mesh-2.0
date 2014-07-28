@@ -19,8 +19,11 @@ var GoalSchema = new Schema({
     },
     description: {
         type: String,
-        required: true,
         trim: true
+    },
+    isActive: {
+        type: Boolean,
+        default: false
     },
     user: {
         type: Schema.ObjectId,
@@ -33,7 +36,7 @@ var GoalSchema = new Schema({
     end: {
         type: Date
     },
-    active: [{
+    people: [{
         type: Schema.ObjectId,
         ref: 'User'
     }],

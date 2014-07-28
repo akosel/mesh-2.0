@@ -1,3 +1,23 @@
-<section data-ng-controller="IndexController">
-  <h1 mean-token="'home-default'">This is the home view</h1>
+<section data-ng-controller="IndexController" >
+<h1 mean-token="'home-default'">This is home</h1>
+<section data-ng-controller="GoalsController" data-ng-init="find({user: global.user._id})">
+        <ul class="goals unstyled">
+            <li data-ng-repeat="goal in goals">
+                <h2>
+                    {{ goal.user.name }}
+                    <a data-ng-href="/#!/goals/{{goal._id}}">{{goal.title}}</a>
+                    <span>{{goal.created | date:'MM/dd'}}</span>
+                </h2>
+                <span data-ng-if="hasAuthorization(goal)">
+                    <a class="btn" href="/#!/goals/{{goal._id}}/edit">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a class="btn" data-ng-click="remove(goal);">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                </span>
+            </li>
+        </ul>
+        <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
+    </section>
 </section>

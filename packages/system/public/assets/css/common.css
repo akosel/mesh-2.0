@@ -48,3 +48,6 @@ footer p {
 .ng-valid.ng-dirty{
     border-color:#78FA89;
 }
+ul.unstyled{
+    list-style-type: none;
+}

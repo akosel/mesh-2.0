@@ -25,7 +25,7 @@ angular.module('mean.goals').config(['$stateProvider',
 
         // states for my app
         $stateProvider
-        .state('my goals', {
+        .state('all goals', {
             url: '/goals',
             templateUrl: 'goals/views/list.html',
             resolve: {

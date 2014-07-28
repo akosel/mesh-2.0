@@ -18,7 +18,7 @@ Goals.register(function(app, auth, database) {
     Goals.menus.add({
         'roles': ['authenticated'],
         'title': 'Goals',
-        'link': 'my goals'
+        'link': 'all goals'
     });
     Goals.menus.add({
         'roles': ['authenticated'],

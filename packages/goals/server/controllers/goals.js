@@ -20,17 +20,39 @@ exports.goal = function(req, res, next, id) {
 };
 
 /**
- *  Create an goal
+ *  Create a goal
  */
 
 exports.create = function(req, res) {
-    var goal = new Goal(req.description);
+    console.log('REQUEST AT GOAL CREATE: ', req);
+    var goal = new Goal(req.body);
     goal.user = req.user;
+    goal.people.push(goal.user);
+
+    goal.save(function(err) {
+        if(err) {
+            console.log('exports create: ', err);
+            return res.json(500, {
+                error: 'Cannot save the goal'
+            });
+        }
+        res.json(goal);
+    });
+};
+
+/**
+ *  Join a goal
+ */
+
+exports.join = function(req, res) {
+    console.log('exports join');
+    var goal = req.goal;
+    goal.people.push(goal.user);
 
     goal.save(function(err) {
         if(err) {
             return res.json(500, {
-                error: 'Cannot save the goal'
+                error: 'Cannot edit the goal'
             });
         }
         res.json(goal);
@@ -41,9 +63,10 @@ exports.create = function(req, res) {
  *  Update a goal
  */
 exports.update = function(req, res) {
+    console.log('exports update');
     var goal = req.goal;
 
-    goal = _.extend(goal, req.description);
+    goal = _.extend(goal, req.body);
 
     goal.save(function(err) {
         if(err) {
@@ -81,8 +104,9 @@ exports.show = function(req, res) {
 /**
  * List of all goals
  */
-exports.all = function(req, res) {
-    Goal.find().sort('-end').populate('user', 'name username').exec(function(err, goals) {
+exports.list = function(req, res) {
+    Goal.find(req.query).sort('-end').populate('user', 'name username').exec(function(err, goals) {
+        console.log('all: ', goals);
         if(err) {
             return res.json(500, {
                 error: 'Cannot list the goals'
@@ -91,3 +115,4 @@ exports.all = function(req, res) {
         res.json(goals);
     });
 };
+

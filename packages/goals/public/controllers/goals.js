@@ -6,24 +6,33 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
 
         $scope.hasAuthorization = function(goal) {
             if (!goal || !goal.user) return false;
-            return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
+            return $scope.global.isAdmin || goal.people.indexOf($scope.global.user._id) != -1;
         };
 
         $scope.create = function(isValid) {
             if (isValid) {
                 var goal = new Goals({
                     title: this.title,
-                    content: this.content
+                    description: this.description,
+                    end: this.end 
                 });
                 goal.$save(function(response) {
                     $location.path('goals/' + response._id);
                 });
 
                 this.title = '';
-                this.content = '';
+                this.description = '';
             } else {
                 $scope.submitted = true;
             }
+        };
+
+        $scope.join = function(goal) {
+           goal.people.push($scope.global.user._id);
+           goal.$update(function() {
+                console.log('in update');
+                $location.path('goals/' + goal._id);
+           });
         };
 
         $scope.remove = function(goal) {
@@ -37,7 +46,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
                 }
             } else {
                 $scope.goal.$remove(function(response) {
-                    $location.path('goals');
+                    $location.path('/goals');
                 });
             }
         };
@@ -58,8 +67,9 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
             }
         };
 
-        $scope.find = function() {
-            Goals.query(function(goals) {
+        $scope.find = function(query) {
+            Goals.query(query, function(goals) {
+                console.log('scope find', query);
                 $scope.goals = goals;
             });
         };
