@@ -6,7 +6,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
 
         $scope.hasAuthorization = function(goal) {
             if (!goal || !goal.user) return false;
-            return $scope.global.isAdmin || goal.people.indexOf($scope.global.user._id) != -1;
+            return $scope.global.isAdmin || goal.people.indexOf($scope.global.user._id) !== -1;
         };
 
         $scope.create = function(isValid) {

@@ -22,6 +22,7 @@ exports.render = function(req, res) {
   res.render('index', {
     user: req.user ? {
       name: req.user.name,
+      picture: req.user.picture,
       _id: req.user._id,
       username: req.user.username,
       roles: req.user.roles

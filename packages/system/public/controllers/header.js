@@ -27,6 +27,8 @@ angular.module('mean.system').controller('HeaderController', ['$scope', '$rootSc
     $rootScope.$on('loggedin', function() {
 
       queryMenu('main', defaultMainMenu);
+      console.log($rootScope.user);
+
 
       $scope.global = {
         authenticated: !! $rootScope.user,
