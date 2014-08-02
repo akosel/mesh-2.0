@@ -42,7 +42,8 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
         };
 
         $scope.remove = function(goal) {
-            if (goal) {
+            var r = confirm('really?');
+            if (goal && r) {
                 goal.$remove();
 
                 for (var i in $scope.goals) {
@@ -50,7 +51,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
                         $scope.goals.splice(i, 1);
                     }
                 }
-            } else {
+            } else if (r){
                 $scope.goal.$remove(function(response) {
                     $location.path('/goals');
                 });

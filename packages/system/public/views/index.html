@@ -1,12 +1,11 @@
 <section data-ng-controller="IndexController" >
 <section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <section>
-            {{ goals.length }}
         </section>
         <ul class="goals unstyled">
-            <li class='col-md-9' data-ng-repeat="goal in goals">
+            <li ng-style="{'background-color': '#ddd'}" class='col-md-9' data-ng-repeat="goal in goals">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{goal._id}}">{{goal.title}}</a>
-                <span ng-show="goal.end" class='col-md-5'>Do it by {{goal.end | date:'MM/dd'}}</span>
+                <span ng-show="goal.end" class='col-md-5'>{{goal.end | timeUntil}}</span>
                 <span ng-hide="goal.end" class='col-md-5'>Not started</span>
                 <div style="background-color: black;" class='pic-60-container' data-ng-repeat="person in goal.people">
                     <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
