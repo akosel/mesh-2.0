@@ -76,7 +76,7 @@ var UserSchema = new Schema({
   linkedin: {}
 });
 
-/**
+/*
  * Virtuals
  */
 UserSchema.virtual('password').set(function(password) {

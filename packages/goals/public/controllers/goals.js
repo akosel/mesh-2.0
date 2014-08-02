@@ -6,7 +6,13 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
 
         $scope.hasAuthorization = function(goal) {
             if (!goal || !goal.user) return false;
-            return $scope.global.isAdmin || goal.people.indexOf($scope.global.user._id) !== -1;
+
+            // TODO use this until underscore gets added in
+            for (var i = 0; i < goal.people.length; i++) {
+                if (goal.people[i]._id === $scope.global.user._id)
+                    return true;
+            }
+            return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
         };
 
         $scope.create = function(isValid) {

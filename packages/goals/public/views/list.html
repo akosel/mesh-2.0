@@ -1,7 +1,6 @@
 <section data-ng-controller="GoalsController" data-ng-init="find()">
     <ul class="goals unstyled">
         <li data-ng-repeat="goal in goals">
-            <span>{{goal.created | date:'medium'}}</span>
             <span>{{goal.user.name}}</span>
             <h2>
                 <a data-ng-href="#!/goals/{{goal._id}}">{{goal.title}}</a>

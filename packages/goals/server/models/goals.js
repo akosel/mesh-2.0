@@ -62,9 +62,10 @@ var GoalSchema = new Schema({
  *  Statics
  */
 GoalSchema.statics.load = function(id, cb) {
+    console.log('schema load', this);
     this.findOne({
         _id: id
-    }).populate('user', 'name username').exec(cb);
+    }).populate('user', 'name username picture').populate('people', 'name username picture').exec(cb);
 };
 
 mongoose.model('Goal', GoalSchema);

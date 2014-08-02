@@ -16,13 +16,6 @@ Tasks.register(function(app, auth, database) {
     //We enable routing. By default the Package Object is passed to the routes
     Tasks.routes(app, auth, database);
 
-    //We are adding a link to the main menu for all authenticated users
-    Tasks.menus.add({
-        title: 'tasks example page',
-        link: 'tasks example page',
-        roles: ['authenticated'],
-        menu: 'main'
-    });
 
     /**
     //Uncomment to use. Requires meanio@0.3.7 or above

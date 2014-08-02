@@ -11,6 +11,7 @@ var mongoose = require('mongoose'),
 
 
 exports.goal = function(req, res, next, id) {
+    console.log('exports goal', id);
     Goal.load(id, function(err, goal) {
         if(err) return next(err);
         if(!goal) return next(new Error('Failed to load goal ' + id));
@@ -24,7 +25,7 @@ exports.goal = function(req, res, next, id) {
  */
 
 exports.create = function(req, res) {
-    console.log('REQUEST AT GOAL CREATE: ', req);
+    console.log('goal created');
     var goal = new Goal(req.body);
     goal.user = req.user;
     goal.people.push(goal.user);
@@ -105,8 +106,7 @@ exports.show = function(req, res) {
  * List of all goals
  */
 exports.list = function(req, res) {
-    Goal.find(req.query).sort('-end').populate('user', 'name username').exec(function(err, goals) {
-        console.log('all: ', goals);
+    Goal.find(req.query).sort('-end').populate('user', 'name username picture').populate('people', 'name username picture').exec(function(err, goals) {
         if(err) {
             return res.json(500, {
                 error: 'Cannot list the goals'
