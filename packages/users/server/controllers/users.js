@@ -235,3 +235,19 @@ exports.forgotpassword = function(req, res, next) {
     }
   );
 };
+
+/**
+ *  retrieve a list of users
+ */
+exports.list = function(req, res) {
+    console.log('exports list user');
+    User.find(req.query).sort('-end').exec(function(err, users) {
+        if(err) {
+            return res.json(500, {
+                error: 'Cannot list the users'
+            });
+        }
+        res.json(users);
+    });
+};
+

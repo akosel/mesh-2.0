@@ -1,4 +1,4 @@
-<section data-ng-controller="GoalsController" data-ng-init="find()">
+<section data-ng-controller="GoalsController" data-ng-init="find({invited: global.user._id})">
     <ul class="goals unstyled">
         <li data-ng-repeat="goal in goals">
             <span>{{goal.user.name}}</span>

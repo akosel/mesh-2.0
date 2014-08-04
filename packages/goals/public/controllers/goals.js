@@ -3,25 +3,47 @@
 angular.module('mean.goals').controller('GoalsController', ['$scope', '$stateParams', '$location', 'Global', 'Goals',
     function($scope, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
+        
+        $scope.commentState = false;
+        
+        $scope.toggleCommentState = function() {
+            $scope.commentState = !$scope.commentState;
+        };
 
         $scope.hasAuthorization = function(goal) {
             if (!goal || !goal.user) return false;
 
             // TODO use this until underscore gets added in
             for (var i = 0; i < goal.people.length; i++) {
-                if (goal.people[i]._id === $scope.global.user._id)
-                    return true;
+                // XXX uncomment to enable edit and delete access to all users
+                // if (goal.people[i]._id === $scope.global.user._id)
+                    // return true;
             }
             return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
+        };
+        $scope.isInvited = function(goal) {
+            if (!goal || !goal.user) return false;
+
+            // TODO use this until underscore gets added in
+            for (var i = 0; i < goal.invited.length; i++) {
+                if (goal.invited[i]._id === $scope.global.user._id)
+                    return true;
+            }
+            // return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
         };
 
         $scope.create = function(isValid) {
             if (isValid) {
+                    
                 var goal = new Goals({
                     title: this.title,
                     description: this.description,
-                    end: this.end 
+                    end: this.end,
                 });
+
+                if (this.invited)
+                    goal.invited = this.invited._id;
+
                 goal.$save(function(response) {
                     $location.path('goals/' + response._id);
                 });
@@ -35,11 +57,28 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
 
         $scope.join = function(goal) {
            goal.people.push($scope.global.user._id);
+
+            // TODO use this until underscore gets added in
+            for (var i = 0; i < goal.invited.length; i++) {
+                if (goal.invited[i]._id === $scope.global.user._id)
+                    goal.invited.splice(i, 1);
+            }
            goal.$update(function() {
-                console.log('in update');
-                $location.path('goals/' + goal._id);
            });
         };
+
+        $scope.addComment = function(goal) {
+            goal.comments.push(this.comment + " -" + $scope.global.user.name);
+
+            goal.$update(function() {
+            });
+        };
+
+        $scope.removeComment = function(goal, comment) {
+            goal.comments.splice(goal.comments.indexOf(comment), 1);
+            goal.$update(function() {
+            });
+        }
 
         $scope.remove = function(goal) {
             var r = confirm('really?');
@@ -52,6 +91,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
                     }
                 }
             } else if (r){
+
                 $scope.goal.$remove(function(response) {
                     $location.path('/goals');
                 });

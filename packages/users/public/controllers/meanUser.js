@@ -111,4 +111,16 @@ angular.module('mean.users')
           });
       };
     }
-  ]);
+  ])
+  .controller('UsersController', ['$scope', '$rootScope', '$location', '$stateParams', 'Global', 'Users',
+    function($scope, $rootScope, $location, $stateParams, Global, Users) {
+        $scope.find = function(query) {
+            console.log('user controller');
+            Users.query(query, function(users) {
+                console.log('user scope find', query);
+                $scope.users = users;
+                console.log('users', users);
+            });
+        }; 
+    }
+]);

@@ -1,5 +1,6 @@
 body {
-    font-family: Futura;
+    font-family: "Proxima Nova", Futura;
+    background-color: grey;
 }
 .page-header {
     padding-bottom: 0 !important;

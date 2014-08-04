@@ -36,15 +36,21 @@
             </div>
         </div>
 
-        <div ng-show="count > 2" class="form-group">
-            <label mean-token="'update-end'" class="col-md-3 control-label">End Date</label>
+        <script type="text/ng-template" id="customTemplate.html">
+            <a>
+                <img ng-src="{{ match.model.picture }}" width="16">
+                <span bind-html-unsafe="match.model.name | typeaheadHighlight:query"></span>
+            </a>
+        </script>
+        <div data-ng-controller="UsersController" ng-show="count > 2" class="form-group">
+            <label mean-token="'add-invited'" class="col-md-3 control-label">Invite Someone</label>
             <div class="col-md-9">
-                <textarea name="people" data-ng-model="people" id="people" placeholder="Add some folks" class="form-control"></textarea>
+                <input type="text" name="invited" data-ng-init="find()" data-ng-model="$parent.invited" id="invited" typeahead="user as user.name for user in users | filter: {name: $viewValue}" typeahead-template-url="customTemplate.html" placeholder="Add some homies" class="form-control"></input>
             </div>
         </div>
 
         <div class="form-group">
-            <div ng-click="count = count + 1" ng-init="count = 0" class="col-md-offset-3 col-md-9">
+            <div ng-disabled="!title" ng-click="count = count + 1" ng-init="count = 0" class="col-md-offset-3 col-md-9">
                 <button ng-disabled="!title" ng-hide="count == 3" type="button" class="btn btn-info">Next step</button>
                 <button ng-disabled="!title" ng-show="count == 3" type="submit" class="btn btn-info">Submit</button>
             </div>

@@ -106,7 +106,11 @@ exports.show = function(req, res) {
  * List of all goals
  */
 exports.list = function(req, res) {
-    Goal.find(req.query).sort('-end').populate('user', 'name username picture').populate('people', 'name username picture').exec(function(err, goals) {
+    Goal.find(req.query).sort('-end')
+        .populate('user', 'name username picture')
+        .populate('people', 'name username picture')
+        .populate('invited', 'name username picture')
+        .exec(function(err, goals) {
         if(err) {
             return res.json(500, {
                 error: 'Cannot list the goals'

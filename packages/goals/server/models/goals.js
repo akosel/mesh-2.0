@@ -12,6 +12,9 @@ var GoalSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    // tags: [{
+    //     type: String
+    // }],
     title: {
         type: String,
         required: true,
@@ -36,6 +39,10 @@ var GoalSchema = new Schema({
     end: {
         type: Date
     },
+    invited: [{
+        type: Schema.ObjectId,
+        ref: 'User'
+    }],
     people: [{
         type: Schema.ObjectId,
         ref: 'User'
@@ -65,7 +72,13 @@ GoalSchema.statics.load = function(id, cb) {
     console.log('schema load', this);
     this.findOne({
         _id: id
-    }).populate('user', 'name username picture').populate('people', 'name username picture').exec(cb);
+    })
+        .populate('user', 'name username picture')
+        .populate('people', 'name username picture')
+        .populate('invited', 'name username picture')
+        .populate('missed', 'name username picture')
+        .populate('completed', 'name username picture')
+        .exec(cb);
 };
 
 mongoose.model('Goal', GoalSchema);

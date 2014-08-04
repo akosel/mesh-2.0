@@ -60,7 +60,8 @@ var UserSchema = new Schema({
     validate: [validatePresenceOf, 'Password cannot be blank']
   },
   picture: {
-    type: String
+    type: String,
+    default: '/users/assets/img/icons/profile.jpg'
   },
   provider: {
     type: String,
