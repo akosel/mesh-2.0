@@ -1,6 +1,17 @@
+html {
+    background: url('/system/assets/img/background/shoes.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
 body {
     font-family: "Proxima Nova", Futura;
-    background-color: grey;
+    background-color: transparent;
+    color: #222222;
+}
+a {
+    color: #57AFC7;
 }
 .page-header {
     padding-bottom: 0 !important;
@@ -29,7 +40,7 @@ body {
 }
 .navbar a {
     text-decoration: none;
-    color: black;
+    color: #ddd;
 }
 .content, .content .container {
     margin: 0 auto;
@@ -62,14 +73,22 @@ ul.unstyled {
 ul.goals li {
     padding-top: 1em;
     padding-bottom: 1em;
+    opacity: .9;
 }
-ul.goals span, ul.goals a {
+ul.goals li:not(:last-child) {
+    border-bottom: solid #ddd;
+}
+ul.goals span.pic, ul.goals a.pic {
     line-height: 60px;
     height: 60px;
 }
 
 .btn, .form-control {
     border-radius: 0;
+}
+.btn-comment {
+    background-color: #609F80;
+    color: #ddd;
 }
 .pic-60 { width: 60px; }
 .pic-60-container {  display: inline-block; border-radius: 60px;height:60px; width: 60px; overflow: hidden; }

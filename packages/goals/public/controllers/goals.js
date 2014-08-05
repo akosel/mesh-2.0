@@ -4,21 +4,19 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
     function($scope, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
         
-        $scope.commentState = false;
-        
-        $scope.toggleCommentState = function() {
-            $scope.commentState = !$scope.commentState;
+        $scope.toggleCommentState = function(goal) {
+            goal.commentState = !goal.commentState;
         };
 
         $scope.hasAuthorization = function(goal) {
             if (!goal || !goal.user) return false;
 
             // TODO use this until underscore gets added in
-            for (var i = 0; i < goal.people.length; i++) {
+            // for (var i = 0; i < goal.people.length; i++) {
                 // XXX uncomment to enable edit and delete access to all users
                 // if (goal.people[i]._id === $scope.global.user._id)
                     // return true;
-            }
+            // }
             return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
         };
         $scope.isInvited = function(goal) {
@@ -68,7 +66,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
         };
 
         $scope.addComment = function(goal) {
-            goal.comments.push(this.comment + " -" + $scope.global.user.name);
+            goal.comments.push(this.comment + ' -' + $scope.global.user.name);
 
             goal.$update(function() {
             });
@@ -115,6 +113,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
         };
 
         $scope.find = function(query) {
+            // XXX test query = {$or: [{"people":"53d86796399da40000a29112" }, {"invited":"53d86796399da40000a29112"}]}
             Goals.query(query, function(goals) {
                 console.log('scope find', query);
                 $scope.goals = goals;

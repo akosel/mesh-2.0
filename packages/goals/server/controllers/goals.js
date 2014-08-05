@@ -106,7 +106,8 @@ exports.show = function(req, res) {
  * List of all goals
  */
 exports.list = function(req, res) {
-    Goal.find(req.query).sort('-end')
+    console.log('query', req.query, typeof(req.query));
+    Goal.find(req.query).sort('end')
         .populate('user', 'name username picture')
         .populate('people', 'name username picture')
         .populate('invited', 'name username picture')

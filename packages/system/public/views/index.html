@@ -1,35 +1,36 @@
-<section data-ng-controller="IndexController" >
-<section data-ng-controller="GoalsController" data-ng-init="find({$or:[{people: global.user._id}, {invited: global.user._id}] })">
-        <section>
-        </section>
+<section class='container' data-ng-controller="IndexController" >
+<section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <ul class="goals unstyled">
-            <li ng-style="{'background-color': 'white', 'color':'grey', 'border':'solid'}" class='col-md-9' data-ng-repeat="goal in goals">
+            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
                 <span ng-show="goal.end" class='col-md-5'>{{ goal.end | timeUntil }}</span>
                 <span ng-hide="goal.end" class='col-md-5'>Not started</span>
-                <div style="color: #3b7140; border: solid;" class='pic-60-container' data-ng-repeat="person in goal.people">
+                <div style="color: #609F80; border: solid;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.people">
                     <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
                 </div>
-                <div style="color: gold; border: solid;" class='pic-60-container' data-ng-repeat="person in goal.invited">
+                <div style="color: #eee; border: solid; opacity: .5;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.invited">
                     <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
                 </div>
+                <div style="clear: both"></div>
+                <span class='col-md-3' >
+                    <button type='button' class='btn btn-comment' ng-click='toggleCommentState(goal)'>Talk about it</button>
+                </span>
                 <span class='col-md-3' data-ng-if="hasAuthorization(goal)">
-                    <a class="btn" href="/#!/goals/{{goal._id}}/edit">
-                        <i class="glyphicon glyphicon-edit"></i>
+                    <a type="button" class="btn btn-warning" href="/#!/goals/{{goal._id}}/edit">
+                        Edit <i class="glyphicon glyphicon-edit"></i>
                     </a>
-                    <a class="btn" data-ng-click="remove(goal);">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </a>
+                    <button type="button" class="btn btn-danger" data-ng-click="remove(goal);">
+                        Remove <i class="glyphicon glyphicon-trash"></i>
+                    </button>
                 </span>
                 <span class='col-md-3' data-ng-if="isInvited(goal)">
-                    <a class="btn" data-ng-click="join(goal);">
-                        <i class="glyphicon glyphicon-plus"></i>
-                    </a>
+                    <button class="btn btn-info" data-ng-click="join(goal);">
+                        Join <i class="glyphicon glyphicon-plus"></i>
+                    </button>
                 </span>
                 <div style="clear: both"></div>
-                <button type='button' class='btn btn-info' ng-click='toggleCommentState()'>View Comments</button>
-                <ul data-ng-show="commentState" style="background-color: #5bc0de;" class="unstyled goals">
-                    <li data-ng-repeat="comment in goal.comments">
+                <ul data-ng-show="goal.commentState" style="background-color: #ddd;" class="unstyled goals">
+                    <li data-ng-repeat="comment in goal.comments track by $index">
                         <span>
                             {{ comment }}
                             <a class="btn" data-ng-click="removeComment(goal, comment)">
@@ -38,16 +39,22 @@
                         </span>
                     </li>
                     <li>
-                        <a class="btn" data-ng-click="addComment(goal)">
-                            <i class="glyphicon glyphicon-comment"></i>
-                        </a>
                         <input type="text" ng-model="comment" required>
+                        <button type="button" class="btn" data-ng-click="addComment(goal)">
+                            Say It
+                        </button>
                     </li>
                 </ul>
             </li>
         </ul>
-        <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
-        <h1 class='col-md-9' data-ng-show="goals || goals.length"><a href="/#!/goals/create">Create another</a> goal?</h1>
+        <ul class='unstyled goals'>
+            <li ng-style="">
+                <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
+                <h1 class='col-md-9' data-ng-show="goals"><a href="/#!/goals/create">Create another</a> goal?</h1>
+            </li>
+        </ul>
 
     </section>
 </section>
+
+
