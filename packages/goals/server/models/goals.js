@@ -58,7 +58,11 @@ var GoalSchema = new Schema({
     comments: [{
         type: String,
         trim: true
-    }]
+    }],
+    commentState: {
+        type: Boolean,
+        default: false
+    }
 });
 
 /*

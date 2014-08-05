@@ -6,8 +6,8 @@ angular.module('mean.system')
         var now = Date.now();
         var end = Date.parse(endDate);
         var dayMs = 1000 * 60 * 60 * 24;
-        var hourMs = 1000 * 60 * 60;
-        return String(Math.floor((end - now) / dayMs)) + " days left";
+//        var hourMs = 1000 * 60 * 60;
+        return String(Math.floor((end - now) / dayMs)) + ' days left';
     };
 })
 .controller('IndexController', ['$scope', 'Global',

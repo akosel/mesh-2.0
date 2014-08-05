@@ -4,6 +4,10 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
     function($scope, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
         
+        $scope.initCommentState = function(goal) {
+            goal.commentState = false;  
+        };
+
         $scope.toggleCommentState = function(goal) {
             goal.commentState = !goal.commentState;
         };
@@ -76,7 +80,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
             goal.comments.splice(goal.comments.indexOf(comment), 1);
             goal.$update(function() {
             });
-        }
+        };
 
         $scope.remove = function(goal) {
             var r = confirm('really?');

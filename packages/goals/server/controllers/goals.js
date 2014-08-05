@@ -2,7 +2,12 @@
 
 var mongoose = require('mongoose'),
     Goal = mongoose.model('Goal'),
-    _ = require('lodash');
+    User = mongoose.model('User'),
+    config = require('meanio').loadConfig(),
+    _ = require('lodash'),
+    async = require('async'),
+    nodemailer = require('nodemailer'),
+    templates = require('../template');
 
 
 /**
@@ -21,14 +26,27 @@ exports.goal = function(req, res, next, id) {
 };
 
 /**
+ * Send reset email
+ */
+function sendMail(mailOptions) {
+    console.log('trying to send!');
+  var transport = nodemailer.createTransport('SMTP', config.mailer);
+  transport.sendMail(mailOptions, function(err, response) {
+      console.log(err, response);
+    if (err) return err;
+    return response;
+  });
+}
+
+/**
  *  Create a goal
  */
 
 exports.create = function(req, res) {
-    console.log('goal created');
     var goal = new Goal(req.body);
     goal.user = req.user;
     goal.people.push(goal.user);
+    console.log('goal created', goal);
 
     goal.save(function(err) {
         if(err) {
@@ -39,6 +57,29 @@ exports.create = function(req, res) {
         }
         res.json(goal);
     });
+
+    // XXX I have a suspicion this is not the most effective way to do this
+    for (var i = 0; i < goal.invited.length; i++) {
+        async.waterfall([
+            function(done) {
+
+                User.findOne({
+                    _id: goal.invited[i]
+                }, function(err, user) {
+                  if (err || !user) return done(true);
+                  done(err, user);
+                });
+            },
+            function(user, done) {
+                var mailOptions = {
+                  to: user.email,
+                  from: config.emailFrom
+                };
+                mailOptions = templates.goal_invite_email(goal, user, req, mailOptions);
+                sendMail(mailOptions);
+            }
+        ]);
+    }
 };
 
 /**

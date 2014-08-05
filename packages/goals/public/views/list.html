@@ -1,24 +1,50 @@
 <section data-ng-controller="GoalsController" data-ng-init="find({invited: global.user._id})">
-    <ul class="goals unstyled">
-        <li data-ng-repeat="goal in goals">
-            <span>{{goal.user.name}}</span>
-            <h2>
-                <a data-ng-href="#!/goals/{{goal._id}}">{{goal.title}}</a>
-            </h2>
-            <span data-ng-if="hasAuthorization(goal)">
-                <a class="btn" href="/#!/goals/{{goal._id}}/edit">
-                    <i class="glyphicon glyphicon-edit"></i>
-                </a>
-                <a class="btn" data-ng-click="remove(goal);">
-                    <i class="glyphicon glyphicon-trash"></i>
-                </a>
-            </span>
-            <span data-ng-if="!hasAuthorization(goal)">
-                <a class="btn" data-ng-click="join(goal);">
-                    <i class="glyphicon glyphicon-plus"></i>
-                </a>
-            </span>
-        </li>
-    </ul>
+        <ul class="goals unstyled">
+            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals">
+                <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
+                <span ng-show="goal.end" class='col-md-5'>{{ goal.end | timeUntil }}</span>
+                <span ng-hide="goal.end" class='col-md-5'>Not started</span>
+                <div style="color: #609F80; border: solid;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.people">
+                    <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
+                </div>
+                <div style="color: #eee; border: solid; opacity: .5;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.invited">
+                    <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
+                </div>
+                <div style="clear: both"></div>
+                <span class='col-md-3' >
+                    <button type='button' class='btn btn-comment' ng-click='toggleCommentState(goal)'>Talk about it</button>
+                </span>
+                <span class='col-md-3' data-ng-if="hasAuthorization(goal)">
+                    <a type="button" class="btn btn-warning" href="/#!/goals/{{goal._id}}/edit">
+                        Edit <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <button type="button" class="btn btn-danger" data-ng-click="remove(goal);">
+                        Remove <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+                </span>
+                <span class='col-md-3' data-ng-if="isInvited(goal)">
+                    <button class="btn btn-info" data-ng-click="join(goal);">
+                        Join <i class="glyphicon glyphicon-plus"></i>
+                    </button>
+                </span>
+                <div style="clear: both"></div>
+                <ul data-ng-show="goal.commentState" style="background-color: #ddd;" class="unstyled goals">
+                    <li data-ng-repeat="comment in goal.comments track by $index">
+                        <span>
+                            {{ comment }}
+                            <a class="btn" data-ng-click="removeComment(goal, comment)">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </span>
+                    </li>
+                    <li>
+                        <input type="text" ng-model="comment" required>
+                        <button type="button" class="btn" data-ng-click="addComment(goal)">
+                            Say It
+                        </button>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
 </section>

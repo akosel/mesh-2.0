@@ -88,7 +88,7 @@ ul.goals span.pic, ul.goals a.pic {
 }
 .btn-comment {
     background-color: #609F80;
-    color: #ddd;
+    color: #fff;
 }
 .pic-60 { width: 60px; }
 .pic-60-container {  display: inline-block; border-radius: 60px;height:60px; width: 60px; overflow: hidden; }
