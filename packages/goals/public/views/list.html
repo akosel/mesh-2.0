@@ -1,4 +1,4 @@
-<section data-ng-controller="GoalsController" data-ng-init="find({invited: global.user._id})">
+<section class='container' data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <ul class="goals unstyled">
             <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>

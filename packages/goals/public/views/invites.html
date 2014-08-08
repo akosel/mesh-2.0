@@ -1,16 +1,6 @@
-<section class='container' data-ng-controller="IndexController" >
-<section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
-        <tabset>
-        <tab
-            ng-repeat='t in tabs'
-            heading='{{t.heading}}'
-            select='go(t.route)'
-            active='t.active'>
-        </tab>
-        </tabset>
-        <div ui-view><div>
+<section class='container' data-ng-controller="GoalsController" data-ng-init="find({invited: global.user._id})">
         <ul class="goals unstyled">
-            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-init="initCommentState(goal)">
+            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
                 <span ng-show="goal.end" class='col-md-5'>{{ goal.end | timeUntil }}</span>
                 <span ng-hide="goal.end" class='col-md-5'>Not started</span>
@@ -24,15 +14,12 @@
                 <span class='col-md-3' >
                     <button type='button' class='btn btn-comment' ng-click='toggleCommentState(goal)'>Talk about it</button>
                 </span>
-                <span class='col-md-6' data-ng-if="hasAuthorization(goal)">
+                <span class='col-md-3' data-ng-if="hasAuthorization(goal)">
                     <a type="button" class="btn btn-warning" href="/#!/goals/{{goal._id}}/edit">
                         Edit <i class="glyphicon glyphicon-edit"></i>
                     </a>
                     <button type="button" class="btn btn-danger" data-ng-click="remove(goal);">
                         Remove <i class="glyphicon glyphicon-trash"></i>
-                    </button>
-                    <button data-ng-if="!isCompleted(goal)" type="button" class="btn btn-success" data-ng-click="complete(goal);">
-                        Complete <i class="glyphicon glyphicon-ok"></i>
                     </button>
                 </span>
                 <span class='col-md-3' data-ng-if="isInvited(goal)">
@@ -59,14 +46,5 @@
                 </ul>
             </li>
         </ul>
-        <ul class='unstyled goals'>
-            <li ng-style="">
-                <h1 data-ng-hide="!goals || goals.length">No goals yet. <br> Why don't you <a href="/#!/goals/create">create one</a>?</h1>
-                <h1 class='col-md-9' data-ng-show="goals"><a href="/#!/goals/create">Create another</a> goal?</h1>
-            </li>
-        </ul>
-
-    </section>
+    <h1 data-ng-hide="!goals || goals.length">No invites right now. <br> Feel free to <a href="/#!/goals/create">start another goal though</a>.</h1>
 </section>
-
-

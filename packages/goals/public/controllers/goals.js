@@ -1,8 +1,29 @@
 'use strict';
 
-angular.module('mean.goals').controller('GoalsController', ['$scope', '$stateParams', '$location', 'Global', 'Goals',
-    function($scope, $stateParams, $location, Global, Goals) {
+angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', '$stateParams', '$location', 'Global', 'Goals',
+    function($scope, $state, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
+
+        $scope.tabs = [
+            { heading: 'To Do', route:'list.todo', active: false },
+            { heading: 'Invites', route:'list.invites', active: false },
+            { heading: 'Missed', route:'list.missed', active: false },
+            { heading: 'Completed', route:'list.completed', active: false }
+        ];
+
+        $scope.go = function(route) {
+            $state.go(route);
+        };
+
+        $scope.active = function(route) {
+            return $state.is(route);
+        };
+
+        $scope.$on('$stateChangeSuccess', function() {
+            $scope.tabs.forEach(function(tab) {
+                tab.active = $scope.active(tab.route);
+            });     
+        });
         
         $scope.initCommentState = function(goal) {
             goal.commentState = false;  
@@ -31,6 +52,19 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
                 if (goal.invited[i]._id === $scope.global.user._id)
                     return true;
             }
+            // return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
+        };
+        $scope.isCompleted = function(goal) {
+            if (!goal || !goal.user) return false;
+            console.log(goal);
+
+            // TODO use this until underscore gets added in
+            for (var i = 0; i < goal.completed.length; i++) {
+                console.log(goal.completed[i]._id, $scope.global.user._id);
+                if (goal.completed[i]._id === $scope.global.user._id)
+                    return true;
+            }
+            return false;
             // return $scope.global.isAdmin || goal.user._id === $scope.global.user._id;
         };
 
@@ -65,6 +99,19 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$statePar
                 if (goal.invited[i]._id === $scope.global.user._id)
                     goal.invited.splice(i, 1);
             }
+           goal.$update(function() {
+           });
+        };
+
+        $scope.complete = function(goal) {
+           goal.completed.push($scope.global.user._id);
+
+            // TODO use this until underscore gets added in
+            for (var i = 0; i < goal.people.length; i++) {
+                if (goal.people[i]._id === $scope.global.user._id)
+                    goal.people.splice(i, 1);
+            }
+
            goal.$update(function() {
            });
         };

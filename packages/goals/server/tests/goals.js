@@ -59,11 +59,11 @@ describe('<Unit Test>', function() {
                 });
             });
 
-            it('should be able to show an error when trying to save without description', function(done) {
+            it('should be able to save without description', function(done) {
                 goal.description = '';
 
                 return goal.save(function(err) {
-                    should.exist(err);
+                    should.not.exist(err);
                     done();
                 });
             });

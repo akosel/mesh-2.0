@@ -25,9 +25,38 @@ angular.module('mean.goals').config(['$stateProvider',
 
         // states for my app
         $stateProvider
-        .state('all goals', {
+        .state('list', {
+            abstract: true,
             url: '/goals',
+            templateUrl: 'system/views/index.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('list.todo', {
+            url: '/todo',
             templateUrl: 'goals/views/list.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('list.invites', {
+            url: '/invites',
+            templateUrl: 'goals/views/invites.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('list.missed', {
+            url: '/missed',
+            templateUrl: 'goals/views/missed.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('list.completed', {
+            url: '/completed',
+            templateUrl: 'goals/views/completed.html',
             resolve: {
                 loggedin: checkLoggedin
             }

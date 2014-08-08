@@ -79,9 +79,9 @@ GoalSchema.statics.load = function(id, cb) {
     })
         .populate('user', 'name username picture')
         .populate('people', 'name username picture')
+        .populate('completed', 'name username picture')
         .populate('invited', 'name username picture')
         .populate('missed', 'name username picture')
-        .populate('completed', 'name username picture')
         .exec(cb);
 };
 

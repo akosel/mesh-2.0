@@ -8,7 +8,7 @@ html {
 body {
     font-family: "Proxima Nova", Futura;
     background-color: transparent;
-    color: #222222;
+    color: #fff;
 }
 a {
     color: #57AFC7;
@@ -74,6 +74,7 @@ ul.goals li {
     padding-top: 1em;
     padding-bottom: 1em;
     opacity: .9;
+    color: black;
 }
 ul.goals li:not(:last-child) {
     border-bottom: solid #ddd;
@@ -94,5 +95,5 @@ ul.goals span.pic, ul.goals a.pic {
 .pic-60-container {  display: inline-block; border-radius: 60px;height:60px; width: 60px; overflow: hidden; }
 .pic-100 { width: 100px; }
 .pic-100-container { display: inline-block; border-radius: 100px;height:100px; width: 100px; overflow: hidden; }
-input {  border-radius: 0; border:none; border-bottom:1px solid #CDCDCD; opacity:.5}
+input {  color: black; border-radius: 0; border:none; border-bottom:1px solid #CDCDCD; opacity:.5}
 input:hover { border-radius: 0; border:none; opacity:1}

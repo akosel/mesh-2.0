@@ -59,28 +59,27 @@ exports.create = function(req, res) {
     });
 
     // XXX I have a suspicion this is not the most effective way to do this
-    for (var i = 0; i < goal.invited.length; i++) {
-        async.waterfall([
-            function(done) {
+    async.waterfall([
+        function(done) {
 
-                User.findOne({
-                    _id: goal.invited[i]
-                }, function(err, user) {
-                  if (err || !user) return done(true);
-                  done(err, user);
-                });
-            },
-            function(user, done) {
-                var mailOptions = {
-                  to: user.email,
-                  from: config.emailFrom
-                };
-                mailOptions = templates.goal_invite_email(goal, user, req, mailOptions);
-                sendMail(mailOptions);
-            }
-        ]);
-    }
+            User.findOne({
+                _id: goal.invited[0]
+            }, function(err, user) {
+              if (err || !user) return done(true);
+              done(err, user);
+            });
+        },
+        function(user, done) {
+            var mailOptions = {
+              to: user.email,
+              from: config.emailFrom
+            };
+            mailOptions = templates.goal_invite_email(goal, user, req, mailOptions);
+            sendMail(mailOptions);
+        }
+    ]);
 };
+
 
 /**
  *  Join a goal
@@ -100,7 +99,6 @@ exports.join = function(req, res) {
         res.json(goal);
     });
 };
-
 /**
  *  Update a goal
  */
@@ -140,6 +138,7 @@ exports.destroy = function(req, res) {
  *  Show a goal
  */
 exports.show = function(req, res) {
+    console.log('exports show');
     res.json(req.goal);
 };
 

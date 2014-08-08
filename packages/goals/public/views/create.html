@@ -1,4 +1,4 @@
-<section data-ng-controller="GoalsController">
+<section class='container' data-ng-controller="GoalsController">
 <form name="goalForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(goalForm.$valid)" novalidate>
         <p class="col-md-offset-3 col-md-9" ng-show="count == 0">This is just a simple title for your goal. You can make more concrete tasks later on.</p>
         <div class="form-group" ng-class="{ 'has-error': submitted && goalForm.title.$invalid }">
@@ -50,8 +50,8 @@
         </div>
 
         <div class="form-group">
-            <div ng-disabled="!title" ng-click="count = count + 1" ng-init="count = 0" class="col-md-offset-3 col-md-9">
-                <button ng-disabled="!title" ng-hide="count == 3" type="button" class="btn btn-info">Next step</button>
+            <div ng-disabled="!title" ng-init="count = 0" class="col-md-offset-3 col-md-9">
+                <button ng-disabled="!title" ng-click="count = count + 1"  ng-hide="count == 3" type="button" class="btn btn-info">Next step</button>
                 <button ng-disabled="!title" ng-show="count == 3" type="submit" class="btn btn-info">Submit</button>
             </div>
         </div>
