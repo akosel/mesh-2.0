@@ -4,27 +4,6 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
     function($scope, $state, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
 
-        $scope.tabs = [
-            { heading: 'To Do', route:'list.todo', active: false },
-            { heading: 'Invites', route:'list.invites', active: false },
-            { heading: 'Missed', route:'list.missed', active: false },
-            { heading: 'Completed', route:'list.completed', active: false }
-        ];
-
-        $scope.go = function(route) {
-            $state.go(route);
-        };
-
-        $scope.active = function(route) {
-            return $state.is(route);
-        };
-
-        $scope.$on('$stateChangeSuccess', function() {
-            $scope.tabs.forEach(function(tab) {
-                tab.active = $scope.active(tab.route);
-            });     
-        });
-        
         $scope.initCommentState = function(goal) {
             goal.commentState = false;  
         };
@@ -56,7 +35,6 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
         };
         $scope.isCompleted = function(goal) {
             if (!goal || !goal.user) return false;
-            console.log(goal);
 
             // TODO use this until underscore gets added in
             for (var i = 0; i < goal.completed.length; i++) {
@@ -100,6 +78,21 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
                     goal.invited.splice(i, 1);
             }
            goal.$update(function() {
+           });
+        };
+
+        $scope.addChildGoal = function(parentGoal) {
+            var childGoal = new Goals({
+                title: this.title,
+                parentGoals: [parentGoal._id]
+            });
+           childGoal.$save(function() {
+               parentGoal.childrenGoals.push(childGoal._id);
+
+               console.log('addChild', parentGoal, childGoal);
+
+               parentGoal.$update(function() {
+               });
            });
         };
 

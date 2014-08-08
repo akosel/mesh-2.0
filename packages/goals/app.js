@@ -20,6 +20,21 @@ Goals.register(function(app, auth, database) {
         'title': 'Create New Goal',
         'link': 'create goal'
     });
+    Goals.menus.add({
+        'roles': ['authenticated'],
+        'title': 'Invites',
+        'link': 'invites'
+    });
+    Goals.menus.add({
+        'roles': ['authenticated'],
+        'title': 'Completed',
+        'link': 'completed'
+    });
+    Goals.menus.add({
+        'roles': ['authenticated'],
+        'title': 'Missed',
+        'link': 'missed'
+    });
 
     Goals.aggregateAsset('js', 'test.js', {
         group: 'footer',

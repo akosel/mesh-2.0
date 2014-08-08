@@ -20,6 +20,14 @@ var GoalSchema = new Schema({
         required: true,
         trim: true
     },
+    childrenGoals: [{
+        type: Schema.ObjectId,
+        ref: 'Goal'
+    }],
+    parentGoals: [{
+        type: Schema.ObjectId,
+        ref: 'Goal'
+    }],
     description: {
         type: String,
         trim: true
@@ -82,6 +90,7 @@ GoalSchema.statics.load = function(id, cb) {
         .populate('completed', 'name username picture')
         .populate('invited', 'name username picture')
         .populate('missed', 'name username picture')
+        .populate('childrenGoals', 'title')
         .exec(cb);
 };
 

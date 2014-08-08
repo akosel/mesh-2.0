@@ -25,42 +25,6 @@ angular.module('mean.goals').config(['$stateProvider',
 
         // states for my app
         $stateProvider
-        .state('list', {
-            abstract: true,
-            url: '/goals',
-            templateUrl: 'system/views/index.html',
-            resolve: {
-                loggedin: checkLoggedin
-            }
-        })
-        .state('list.todo', {
-            url: '/todo',
-            templateUrl: 'goals/views/list.html',
-            resolve: {
-                loggedin: checkLoggedin
-            }
-        })
-        .state('list.invites', {
-            url: '/invites',
-            templateUrl: 'goals/views/invites.html',
-            resolve: {
-                loggedin: checkLoggedin
-            }
-        })
-        .state('list.missed', {
-            url: '/missed',
-            templateUrl: 'goals/views/missed.html',
-            resolve: {
-                loggedin: checkLoggedin
-            }
-        })
-        .state('list.completed', {
-            url: '/completed',
-            templateUrl: 'goals/views/completed.html',
-            resolve: {
-                loggedin: checkLoggedin
-            }
-        })
         .state('create goal', {
             url: '/goals/create',
             templateUrl: 'goals/views/create.html',
@@ -68,9 +32,37 @@ angular.module('mean.goals').config(['$stateProvider',
                 loggedin: checkLoggedin
             }
         })
-        .state('edit goal', {
+        .state('editGoal', {
             url: '/goals/:goalId/edit',
             templateUrl: 'goals/views/edit.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('list', {
+            url: '/goals',
+            templateUrl: 'system/views/index.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('invites', {
+            url: '/invites',
+            templateUrl: 'goals/views/invites.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('missed', {
+            url: '/missed',
+            templateUrl: 'goals/views/missed.html',
+            resolve: {
+                loggedin: checkLoggedin
+            }
+        })
+        .state('completed', {
+            url: '/completed',
+            templateUrl: 'goals/views/completed.html',
             resolve: {
                 loggedin: checkLoggedin
             }

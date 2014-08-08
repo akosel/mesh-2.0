@@ -1,7 +1,7 @@
  'use strict';
 
 module.exports = {
-  goal_invite_email: function(goal, user, req, token, mailOptions) {
+  goal_invite_email: function(goal, user, req, mailOptions) {
     mailOptions.html = [
       'Hi ' + goal.user.name + ',',
       'We have received a request to reset the password for your account.',

@@ -1,6 +1,6 @@
 <section class='container' data-ng-controller="GoalsController" data-ng-init="find({completed: global.user._id})">
         <ul class="goals unstyled">
-            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals">
+            <li ng-style="{'background-color':'white'}" data-ng-init="initCommentState(goal)" class='col-md-12' data-ng-repeat="goal in goals">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
                 <span ng-show="goal.end" class='col-md-5'>{{ goal.end | timeUntil }}</span>
                 <span ng-hide="goal.end" class='col-md-5'>Not started</span>

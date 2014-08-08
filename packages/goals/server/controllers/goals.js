@@ -105,8 +105,31 @@ exports.join = function(req, res) {
 exports.update = function(req, res) {
     console.log('exports update');
     var goal = req.goal;
+    
+    console.log(goal.childrenGoals, req.body);
+
+    async.waterfall([
+        function(done) {
+
+            User.findOne({
+                _id: goal.invited[0]
+            }, function(err, user) {
+              if (err || !user) return done(true);
+              done(err, user);
+            });
+        },
+        function(user, done) {
+            var mailOptions = {
+              to: user.email,
+              from: config.emailFrom
+            };
+            mailOptions = templates.goal_invite_email(goal, user, req, mailOptions);
+            sendMail(mailOptions);
+        }
+    ]);
 
     goal = _.extend(goal, req.body);
+    console.log('extended goal', goal);
 
     goal.save(function(err) {
         if(err) {

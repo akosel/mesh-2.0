@@ -1,14 +1,5 @@
 <section class='container' data-ng-controller="IndexController" >
-<section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
-        <tabset>
-        <tab
-            ng-repeat='t in tabs'
-            heading='{{t.heading}}'
-            select='go(t.route)'
-            active='t.active'>
-        </tab>
-        </tabset>
-        <div ui-view><div>
+<section data-ng-controller="GoalsController" data-ng-init="find({'people': global.user._id})">
         <ul class="goals unstyled">
             <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-init="initCommentState(goal)">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
@@ -41,6 +32,19 @@
                     </button>
                 </span>
                 <div style="clear: both"></div>
+                <ul  style="background-color: #ddd;" class="unstyled goals">
+                    <li data-ng-repeat="child in goal.childrenGoals">
+                        <span>
+                            {{ child }}
+                        </span>
+                    </li>
+                    <li>
+                        <input type="text" ng-model="title" placeholder="Enter title" required>
+                        <button type="button" class="btn" data-ng-click="addChildGoal(goal)">
+                            Add Child Goal
+                        </button>
+                    </li>
+                </ul>
                 <ul data-ng-show="goal.commentState" style="background-color: #ddd;" class="unstyled goals">
                     <li data-ng-repeat="comment in goal.comments track by $index">
                         <span>

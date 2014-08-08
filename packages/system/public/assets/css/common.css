@@ -42,6 +42,17 @@ a {
     text-decoration: none;
     color: #ddd;
 }
+.navbar a:hover {
+    color: #555;
+}
+.nav-tabs > li > a {
+    color: #fff;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+.nav-tabs > li > a:hover {
+    color: #555;
+}
 .content, .content .container {
     margin: 0 auto;
     margin-top:70px;
