@@ -12,6 +12,18 @@ var mongoose = require('mongoose'),
   templates = require('../template');
 
 /**
+ * Send email
+ */
+function sendMail(mailOptions) {
+    console.log('trying to send');
+  var transport = nodemailer.createTransport('SMTP', config.mailer);
+  transport.sendMail(mailOptions, function(err, response) {
+      console.log(err, response);
+    if (err) return err;
+    return response;
+  });
+}
+/**
  * Auth callback
  */
 exports.authCallback = function(req, res) {
@@ -48,7 +60,8 @@ exports.session = function(req, res) {
  */
 exports.create = function(req, res, next) {
   var user = new User(req.body);
-
+    
+  console.log('creating user', user);
   user.provider = 'local';
 
   // because we set our user.provider to local our models/user.js validation will always be true
@@ -99,12 +112,22 @@ exports.create = function(req, res, next) {
 
       return res.status(400);
     }
+    var mailOptions = {
+      to: user.email,
+      from: config.emailFrom
+    };
+    var token = '';
+    mailOptions = templates.welcome_email(user, req, token, mailOptions);
+    sendMail(mailOptions);
+
     req.logIn(user, function(err) {
       if (err) return next(err);
       return res.redirect('/');
     });
     res.status(200);
   });
+
+
 };
 /**
  * Send User
@@ -170,16 +193,6 @@ exports.resetpassword = function(req, res, next) {
   });
 };
 
-/**
- * Send reset password email
- */
-function sendMail(mailOptions) {
-  var transport = nodemailer.createTransport('SMTP', config.mailer);
-  transport.sendMail(mailOptions, function(err, response) {
-    if (err) return err;
-    return response;
-  });
-}
 
 /**
  * Callback for forgot password link
@@ -235,3 +248,19 @@ exports.forgotpassword = function(req, res, next) {
     }
   );
 };
+
+/**
+ *  retrieve a list of users
+ */
+exports.list = function(req, res) {
+    console.log('exports list user');
+    User.find(req.query).sort('name').exec(function(err, users) {
+        if(err) {
+            return res.json(500, {
+                error: 'Cannot list the users'
+            });
+        }
+        res.json(users);
+    });
+};
+

@@ -1,0 +1,14 @@
+<section data-ng-controller="GoalsController" data-ng-init="findOne()">
+<h2>{{goal.title}}</h2>
+<strong>{{goal.description}}</strong>
+<h3 data-ng-hide="!goal.end">Complete this by {{goal.end | date: 'MM/dd'}}</h3>
+<h3 data-ng-hide="goal.end">You never added an end date. You should <a href="/#!/goals/{{ goal._id }}/edit">do that.</a></h3>
+<div data-ng-if="hasAuthorization(goal)">
+    <a class="btn" href="/#!/goals/{{goal._id}}/edit">
+        <i class="glyphicon glyphicon-edit"></i>
+    </a>
+    <a class="btn" data-ng-click="remove(goal);">
+        <i class="glyphicon glyphicon-trash"></i>
+    </a>
+</div>
+</section>

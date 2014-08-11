@@ -59,6 +59,10 @@ var UserSchema = new Schema({
     type: String,
     validate: [validatePresenceOf, 'Password cannot be blank']
   },
+  picture: {
+    type: String,
+    default: '/users/assets/img/icons/profile.jpg'
+  },
   provider: {
     type: String,
     default: 'local'
@@ -73,7 +77,7 @@ var UserSchema = new Schema({
   linkedin: {}
 });
 
-/**
+/*
  * Virtuals
  */
 UserSchema.virtual('password').set(function(password) {
