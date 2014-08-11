@@ -1,9 +1,9 @@
 'use strict';
 
 module.exports = {
-  db: 'mongodb://localhost/mean-prod',
+    db: 'mongodb://admin:allies39@kahana.mongohq.com:10032/app28312045',
   app: {
-    name: 'MEAN - A Modern Stack - Production'
+    name: 'Mesherator'
   },
   facebook: {
     clientID: 'APP_ID',
