@@ -101,10 +101,12 @@ module.exports = function(passport) {
         if (user) {
           return done(err, user);
         }
+        console.log(profile);
         user = new User({
           name: profile.displayName,
           email: profile.emails[0].value,
           username: profile.username || profile.emails[0].value.split('@')[0],
+          picture: 'http://graph.facebook.com/' + profile.id + '/picture?type=large',
           provider: 'facebook',
           facebook: profile._json,
           roles: ['authenticated']

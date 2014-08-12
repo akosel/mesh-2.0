@@ -36,7 +36,8 @@ module.exports = function(grunt) {
         files: paths.css,
         tasks: ['csslint'],
         options: {
-          livereload: true
+          livereload: true,
+          interval: 500
         }
       }
     },
@@ -105,7 +106,7 @@ module.exports = function(grunt) {
     },
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
+          configFile: 'karma.conf.js'
       }
     }
   });
