@@ -173,13 +173,36 @@ exports.list = function(req, res) {
     Goal.find(req.query).sort('end')
         .populate('user', 'name username picture')
         .populate('people', 'name username picture')
+        .populate('completed', 'name username picture')
         .populate('invited', 'name username picture')
+        .populate('missed', 'name username picture')
+        .populate('childrenGoals', 'title')
         .exec(function(err, goals) {
         if(err) {
             return res.json(500, {
                 error: 'Cannot list the goals'
             });
         }
+
+        // update any goals that have been missed
+         _(goals).each(function(g, i) {
+             if (g.end && !_(g.people).isEmpty() && Date.parse(g.end) < Date.now()) {
+                 _(g.people).each(function(p, i) {
+                    g.missed.push(p._id);
+                 });
+                 g.people = [];
+                 
+                 g.save(function(err) {
+                     if(err) {
+                         return res.json(500, {
+                             error: 'Cannot update the goal'
+                         });
+                     }
+                 });
+                 goals.splice(i, 1);
+             }
+         });
+        console.log('spliced goals', goals);
         res.json(goals);
     });
 };

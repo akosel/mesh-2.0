@@ -1,6 +1,5 @@
 <section class='container' data-ng-controller="IndexController" >
-<h1>Welcome to Mesh</h1>
-<section data-ng-controller="GoalsController" data-ng-init="find()">
+<section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <ul class="goals unstyled">
             <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-init="initCommentState(goal)">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
@@ -33,10 +32,10 @@
                     </button>
                 </span>
                 <div style="clear: both"></div>
-                <ul  style="background-color: #ddd;" class="unstyled goals">
-                    <li data-ng-repeat="child in goal.childrenGoals">
+                <ul  style="background-color: #ddd; display: none;" class="unstyled goals">
+                    <li data-ng-repeat="child in goal.childrenGoals track by $index">
                         <span>
-                            {{ child }}
+                            {{ child.title }}
                         </span>
                     </li>
                     <li>

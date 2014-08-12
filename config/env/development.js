@@ -3,17 +3,17 @@
 module.exports = {
   db: 'mongodb://localhost/mean-dev',
   app: {
-    name: 'MEAN - FullStack JS - Development'
+    name: 'Mesherator'
   },
   facebook: {
-    clientID: 'APP_ID',
-    clientSecret: 'APP_SECRET',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback'
+    clientID: '486219411504844',
+    clientSecret: 'b8102e713ede65bffd7cdbd0f34f9a99',
+    callbackURL: 'http://local.aaronkosel.com:3000/auth/facebook/callback'
   },
   twitter: {
-    clientID: 'CONSUMER_KEY',
-    clientSecret: 'CONSUMER_SECRET',
-    callbackURL: 'http://localhost:3000/auth/twitter/callback'
+    clientID: '9pX48MOGXJx2PlDi6GXPXozSX',
+    clientSecret: 'OtR40G4NhtVhPfE1iC2rfoYt4am6Gotp6N9Ym59BifEOQn06ko',
+    callbackURL: 'http://local.aaronkosel.com:3000/auth/twitter/callback'
   },
   github: {
     clientID: 'APP_ID',
