@@ -13,6 +13,9 @@
                 <div style="color: #C75E57; border: solid;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.missed">
                     <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
                 </div>
+                <div style="color: blue; border: solid;" class='thumbnail-container pic-60-container' data-ng-repeat="person in goal.completed">
+                    <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
+                </div>
                 <div style="clear: both"></div>
                 <span class='col-md-3' >
                     <button type='button' class='btn btn-comment' ng-click='toggleCommentState(goal)'>Talk about it</button>

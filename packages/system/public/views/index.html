@@ -1,7 +1,7 @@
 <section class='container' data-ng-controller="IndexController" >
 <section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <ul class="goals unstyled">
-            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-init="initCommentState(goal)">
+            <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-show="isPrimary(goal)" data-ng-init="initCommentState(goal)">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
                 <span ng-show="goal.end" class='col-md-5'>{{ goal.end | timeUntil }}</span>
                 <span ng-hide="goal.end" class='col-md-5'>Not started</span>
@@ -12,7 +12,7 @@
                     <img ng-show="person.picture" class='pic-60' ng-src="{{ person.picture }}"/>
                 </div>
                 <div style="clear: both"></div>
-                <span class='col-md-3' >
+                <span class='col-md-3'>
                     <button type='button' class='btn btn-comment' ng-click='toggleCommentState(goal)'>Talk about it</button>
                 </span>
                 <span class='col-md-6' data-ng-if="hasAuthorization(goal)">
@@ -32,13 +32,23 @@
                     </button>
                 </span>
                 <div style="clear: both"></div>
-                <ul  style="background-color: #ddd; display: none;" class="unstyled goals">
+                <div class='center-block' data-ng-hide="true;">
+                    <button class="btn" data-ng-click="toggleChildState(goal)">
+                        {{ goal.childrenGoals.length }} Sub-Goals
+                    </button>
+                </div>
+                <ul data-ng-show="goal.childState" style="background-color: #ddd;" class="unstyled goals">
                     <li data-ng-repeat="child in goal.childrenGoals track by $index">
                         <span>
                             {{ child.title }}
                         </span>
                     </li>
-                    <li>
+                    <li data-ng-hide="goal.childState">
+                        <button class="btn btn-info" data-ng-click="toggleChildState(goal);">
+                            <i class="glyphicon glyphicon-plus"></i> Add another sub-goal
+                        </button>
+                    </li>
+                    <li data-ng-show="goal.childState">
                         <input type="text" ng-model="title" placeholder="Enter title" required>
                         <button type="button" class="btn" data-ng-click="addChildGoal(goal)">
                             Add Child Goal

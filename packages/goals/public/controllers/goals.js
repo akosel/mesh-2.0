@@ -4,6 +4,23 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
     function($scope, $state, $stateParams, $location, Global, Goals) {
         $scope.global = Global;
 
+        $scope.isPrimary = function(goal) {
+            if (!goal) return false;
+            console.log(goal.parentGoals);
+            
+            if (goal.parentGoals.length === 0) return true;
+
+            return false;
+        };
+
+        $scope.initChildState = function(goal) {
+            goal.childState = false;  
+        };
+
+        $scope.toggleChildState = function(goal) {
+            goal.childState = !goal.childState;
+        };
+
         $scope.initCommentState = function(goal) {
             goal.commentState = false;  
         };

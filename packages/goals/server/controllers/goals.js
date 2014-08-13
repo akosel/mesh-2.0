@@ -184,9 +184,9 @@ exports.list = function(req, res) {
             });
         }
 
-        // update any goals that have been missed
+         // update any goals that have been missed
          _(goals).each(function(g, i) {
-             if (!_(g.end).isEmpty() && !_(g.people).isEmpty() && Date.parse(g.end) < Date.now()) {
+             if (!_(g).isEmpty() && !_(g.people).isEmpty() && Date.parse(g.end) < Date.now()) {
                  _(g.people).each(function(p, i) {
                     g.missed.push(p._id);
                  });
