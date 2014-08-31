@@ -35,7 +35,7 @@ module.exports = {
     service: process.env.SERVICE_PROVIDER,
     auth: {
       user: process.env.EMAIL_ID,
-      pass: process.env.PASSWORD
+      pass: process.env.EMAIL_PASSWORD
     }
   }
 };
