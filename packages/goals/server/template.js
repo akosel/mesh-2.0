@@ -3,12 +3,10 @@
 module.exports = {
   goal_invite_email: function(goal, user, req, mailOptions) {
     mailOptions.html = [
-      'Hi ' + goal.user.name + ',',
-      'We have received a request to reset the password for your account.',
-      'If you made this request, please click on the link below or paste this into your browser to complete the process:',
-      'http://' + req.headers.host + '/#!/goals/' + goal._id,
-      'This link will work for 1 hour or until your password is reset.',
-      'If you did not ask to change your password, please ignore this email and your account will remain unchanged.'
+      'Hi ' + user.name + ',',
+      req.user.name + ' invited you to join a goal with them.',
+      'Head down to your profile page to check it out.',
+      'You can also go here http://thawing-earth-1562.herokuapp.com/goals/' + goal._id
     ].join('\n\n');
     mailOptions.subject = 'Invite';
     return mailOptions;

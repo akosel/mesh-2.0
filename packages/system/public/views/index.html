@@ -1,5 +1,6 @@
 <section class='container' data-ng-controller="IndexController" >
-<section data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
+
+<section data-ng-show="global.authenticated" data-ng-controller="GoalsController" data-ng-init="find({people: global.user._id})">
         <ul class="goals unstyled">
             <li ng-style="{'background-color':'white'}" class='col-md-12' data-ng-repeat="goal in goals" data-ng-show="isPrimary(goal)" data-ng-init="initCommentState(goal)">
                 <a class='col-md-3' data-ng-href="/#!/goals/{{ goal._id }}">{{goal.title}}</a>
@@ -37,13 +38,13 @@
                     </button>
                 </span>
                 <div style='clear: both;'></div>
-                <ul data-ng-show="goal.childState" style="background-color: #ddd;" class="unstyled goals">
+                <ul collapse="!goal.childState" style="background-color: #ddd;" class="unstyled goals">
                     <li data-ng-repeat="child in goal.childrenGoals track by $index">
                         <span>
                             {{ child.title }}
                         </span>
                     </li>
-                    <li data-ng-hide="goal.childState">
+                    <li>
                         <button class="btn btn-info" data-ng-click="toggleChildState(goal);">
                             <i class="glyphicon glyphicon-plus"></i> Add another sub-goal
                         </button>
@@ -81,6 +82,14 @@
             </li>
         </ul>
 
+    </section>
+    <section ng-hide="global.authenticated" class='jumbotron' style="color: #666">
+        <div style="margin-bottom: 50px;">
+            <h1>Welcome to the Mesherator</h1>
+        </div>
+        <ng-include src="'users/views/login.html'" class="col-md-10">
+        </ng-include>
+        <div style="clear: both"></div>
     </section>
 </section>
 

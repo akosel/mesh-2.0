@@ -176,7 +176,7 @@ exports.list = function(req, res) {
         .populate('completed', 'name username picture')
         .populate('invited', 'name username picture')
         .populate('missed', 'name username picture')
-        .populate('childrenGoals', 'title')
+        .populate('childrenGoals', 'title end')
         .exec(function(err, goals) {
         if(err) {
             return res.json(500, {

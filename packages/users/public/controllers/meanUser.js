@@ -16,6 +16,7 @@ angular.module('mean.users')
             $scope.loginError = 0;
             $rootScope.user = response.user;
             $rootScope.$emit('loggedin');
+            console.log('loading');
             if (response.redirect) {
               if (window.location.href === response.redirect) {
                 //This is so an admin user will get full admin page
@@ -24,7 +25,7 @@ angular.module('mean.users')
                 window.location = response.redirect;
               }
             } else {
-              $location.url('/');
+                window.location.reload();
             }
           })
           .error(function() {

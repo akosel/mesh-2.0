@@ -6,9 +6,9 @@ module.exports = {
     name: 'Mesherator'
   },
   facebook: {
-    clientID: 'APP_ID',
-    clientSecret: 'APP_SECRET',
-    callbackURL: 'http://localhost:3000/auth/facebook/callback'
+    clientID: process.env.FB_APP_ID,
+    clientSecret: process.env.FB_APP_SECRET,
+    callbackURL: 'http://mesherator.com/auth/facebook/callback'
   },
   twitter: {
     clientID: 'CONSUMER_KEY',

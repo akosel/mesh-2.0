@@ -90,7 +90,7 @@ GoalSchema.statics.load = function(id, cb) {
         .populate('completed', 'name username picture')
         .populate('invited', 'name username picture')
         .populate('missed', 'name username picture')
-        .populate('childrenGoals', 'title')
+        .populate('childrenGoals', 'title end')
         .exec(cb);
 };
 

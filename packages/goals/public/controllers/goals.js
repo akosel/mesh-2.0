@@ -6,27 +6,33 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
 
         $scope.isPrimary = function(goal) {
             if (!goal) return false;
-            console.log(goal.parentGoals);
             
             if (goal.parentGoals.length === 0) return true;
 
             return false;
         };
 
-        $scope.initChildState = function(goal) {
+        $scope.initListStates = function(goal) {
             goal.childState = false;  
+            goal.commentState = false;  
+            goal.childFormState = false;
+            goal.datePopupState = false;
         };
 
         $scope.toggleChildState = function(goal) {
             goal.childState = !goal.childState;
         };
 
-        $scope.initCommentState = function(goal) {
-            goal.commentState = false;  
+        $scope.toggleChildFormState = function(goal) {
+            goal.childFormState = !goal.childFormState;
         };
 
         $scope.toggleCommentState = function(goal) {
             goal.commentState = !goal.commentState;
+        };
+
+        $scope.toggleDatePopupState = function(goal) {
+            goal.datePopupState = !goal.datePopupState;
         };
 
         $scope.hasAuthorization = function(goal) {
@@ -101,6 +107,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
         $scope.addChildGoal = function(parentGoal) {
             var childGoal = new Goals({
                 title: this.title,
+                end: this.end,
                 parentGoals: [parentGoal._id]
             });
            childGoal.$save(function() {
