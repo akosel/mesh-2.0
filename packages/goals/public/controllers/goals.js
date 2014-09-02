@@ -6,6 +6,7 @@ angular.module('mean.goals').controller('GoalsController', ['$scope', '$state', 
 
         $scope.isPrimary = function(goal) {
             if (!goal) return false;
+            console.log(goal.parentGoals);
             
             if (goal.parentGoals.length === 0) return true;
 

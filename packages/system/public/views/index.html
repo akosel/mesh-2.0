@@ -40,18 +40,31 @@
                 <div style='clear: both;'></div>
                 <ul collapse="!goal.childState" style="background-color: #ddd;" class="unstyled goals">
                     <li data-ng-repeat="child in goal.childrenGoals track by $index">
-                        <span>
+                        <span class="col-md-3">
                             {{ child.title }}
+                        </span>
+                        <span class="col-md-3">
+                            {{ child.end | timeUntil }}
                         </span>
                     </li>
                     <li>
-                        <button class="btn btn-info" data-ng-click="toggleChildState(goal);">
+                        <button class="btn btn-info" data-ng-click="toggleChildFormState(goal);">
                             <i class="glyphicon glyphicon-plus"></i> Add another sub-goal
                         </button>
                     </li>
-                    <li data-ng-show="goal.childState">
-                        <input type="text" ng-model="title" placeholder="Enter title" required>
-                        <input ng-model="end" type='text' datepicker min-date="goal.start">
+                    <li collapse="!goal.childFormState">
+                        <div class="row">
+                            <div class="col-md-6">
+                                    <input class='form-control' type="text" ng-model="title" placeholder="Enter title" required>
+                                <p class='input-group'>
+                                    <input class='form-control' ng-model="end" type='text'>
+                                    <span class='input-group-btn'>
+                                        <button ng-click="toggleDatePopupState(goal)" type="button" class='btn btn-default'><i class='glyphicon glyphicon-calendar'></i></button>
+                                    </span>
+                                </p>
+                                <input collapse="!goal.datePopupState" ng-model="end" type='text' datepicker min-date="goal.start">
+                            </div>
+                        </div>
                         <button type="button" class="btn" data-ng-click="addChildGoal(goal)">
                             Add Child Goal
                         </button>
